@@ -45,8 +45,8 @@
     ],
     //阿里巴巴短信服务
     'ALiBaBaSendSms'=>[
-        'accessKeyId'=>'LTAIuLRzidb25zQT',
-        'accessKeySecret'=>'Ul7WsXUoDutaIHLKW3RG6VG7rD8sjP',
+        'accessKeyId'=>'',
+        'accessKeySecret'=>'',
         'region'=>'cn-hangzhou',
         'SignName'=>'趴趴墙',//短信签名名称
         'TemplateCode'=>'SMS_171187822',//短信模板ID
