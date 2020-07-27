@@ -1,0 +1,25 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$data.id}">
+                {include file="tpl/integer" results="data" name="id" label="父级id" value="id" attr=''/}
+{include file="tpl/input" results="data" name="name" label="节点" value="name" attr=''/}
+{include file="tpl/input" results="data" name="title" label="" value="title" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="type" label="" value="type" attr='data-rule="required;"'/}
+{include file="tpl/selectCol" results="data" name="status" label="" value="status" list="hxc" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="pid" label="" value="pid" attr=''/}
+{include file="tpl/input" results="data" name="condition" label="" value="condition" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="faicon" label="图标" value="faicon" attr=''/}
+{include file="tpl/integer" results="data" name="sort" label="排序" value="sort" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

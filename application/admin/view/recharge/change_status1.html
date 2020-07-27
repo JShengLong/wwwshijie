@@ -1,0 +1,17 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('changeStatus1')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$id}">
+                {include file="tpl/integer" results="data" name="total" label="充值金额" value="" attr=''/}
+                {include file="tpl/input" results="data" name="paypassword" label="支付密码" value="" attr='data-rule="required;"'/}
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

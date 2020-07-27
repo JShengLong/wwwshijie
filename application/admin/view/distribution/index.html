@@ -1,0 +1,55 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+                    {include file='tpl/addBtn' url="add" height="80%" width="30%"/}
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">参数</th>
+            <th nowrap="nowrap">等级</th>
+            <th nowrap="nowrap">创建时间</th>
+            <th nowrap="nowrap">更新时间</th>
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td nowrap="nowrap">{$vo.id}</td>
+            <td nowrap="nowrap">{$vo.parameter}%</td>
+            <td nowrap="nowrap">{$vo.level}</td>
+            <td nowrap="nowrap">{$vo.createTime}</td>
+            <td nowrap="nowrap">{$vo.updateTime}</td>
+            <td nowrap="nowrap">
+                <!--编辑资料-->
+                <i class="fa fa-edit qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="编辑"
+                   onclick="modal('{:url(\'edit\',[\'id\'=>$vo[\'id\']])}', '编辑','80%','50%')"></i>
+                <!--删除-->
+                <i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除"
+                   onclick="confirmUpdate('{:url(\'delete\')}','{$vo.id}','确定要删除吗？')"></i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>

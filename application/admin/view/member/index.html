@@ -1,0 +1,131 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="id" label="序号" attr=''/}
+        {include file="tpl/search" results="params" name="m_account" label="账号" attr=''/}
+        {include file="tpl/search" results="params" name="m_nickname" label="昵称" attr=''/}
+        {include file="tpl/search" results="params" name="p_nickname" label="推荐人昵称" attr=''/}
+        {include file="tpl/select" results="params" name="m_isDisable" label="是否禁用" list="m_isDisable" attr='' /}
+        {include file="tpl/date" results="params" name="createtimeStart" label="注册时间开始" attr=''/}
+        {include file="tpl/date" results="params" name="createtimeEnd" label="注册时间结束" attr=''/}
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+                    {include file='tpl/addBtn' url="add" height="80%" width="50%"/}
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <!--<thead>-->
+        <tr>
+            <td nowrap="nowrap">序号</td>
+            <td nowrap="nowrap">用户账号</td>
+            <td nowrap="nowrap">用户昵称</td>
+            <td nowrap="nowrap">头像</td>
+            <td nowrap="nowrap">推荐人昵称</td>
+            <td nowrap="nowrap">注册时间</td>
+            <td nowrap="nowrap">钱包</td>
+            <td nowrap="nowrap">积分</td>
+            <td nowrap="nowrap">消费金额</td>
+            <td nowrap="nowrap">订单数量</td>
+            <td nowrap="nowrap">是否注销</td>
+            <td nowrap="nowrap">是否销售账号</td>
+            <td nowrap="nowrap">操作</td>
+        </tr>
+        <!--</thead>-->
+        <!--<tbody>-->
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.id}</td>
+                <td nowrap="nowrap">{$vo.m_account}</td>
+                <td nowrap="nowrap">{$vo.m_nickname}</td>
+                <td nowrap="nowrap" class="layer-photos">
+                    <img layer-src="{$vo.m_thumb}" src="{$vo.m_thumb}" alt="" style="width: 30px">
+                </td>
+                <td nowrap="nowrap">{$vo.p_nickname}</td>
+                <td nowrap="nowrap">{$vo.m_createTime}</td>
+                <td nowrap="nowrap">
+                    ￥{$vo.m_total}/
+                    <i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="钱包明细" onclick="modal('{:url(\'balance\',[\'id\'=>$vo[\'id\']])}', '钱包明细','80%','80%')">&nbsp; </i>
+                </td>
+                <td nowrap="nowrap" class="layer-photos">
+                    {$vo.m_integral}/
+                    <i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="积分明细" onclick="modal('{:url(\'integral\',[\'id\'=>$vo[\'id\']])}', '积分明细','80%','80%')">&nbsp; </i>
+                </td>
+                <td nowrap="nowrap">{$vo.totals}</td>
+                <td nowrap="nowrap">{$vo.order_num}</td>
+                <td nowrap="nowrap">
+                    <div class="btn-group">
+                        {if condition="$vo.m_isDisable eq 1"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','m_isDisable','2'],'确定要启用吗？')" class="btn btn-danger  btn-xs">
+                            {$vo.m_isDisable|getDropdownlist='isDisable',###}
+                        </button>
+                        {/if}
+                        {if condition="$vo.m_isDisable eq 2"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','m_isDisable','1'],'确定要注销吗？')" class="btn btn-success  btn-xs">
+                            {$vo.m_isDisable|getDropdownlist='isDisable',###}
+                        </button>
+                        {/if}
+                    </div>
+                </td>
+                <td nowrap="nowrap">
+                    <div class="btn-group">
+                        {if condition="$vo.m_level eq 1"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','m_level','2'],'确定要设置销售账号吗？')" class="btn btn-danger  btn-xs">
+                            {$lists.m_level[$vo.m_level]}
+                        </button>
+                        {/if}
+                        {if condition="$vo.m_level eq 2"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','m_level','1'],'确定要取消销售账号吗？')" class="btn btn-success  btn-xs">
+                            {$lists.m_level[$vo.m_level]}
+                        </button>
+                        {/if}
+                    </div>
+                </td>
+
+                <td nowrap="nowrap">
+                    <i class="fa fa-asterisk qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="积分变动" onclick="modal('{:url(\'integrals\',[\'id\'=>$vo[\'id\']])}', '积分变动','80%','50%')"></i>
+                    <i class="fa fa-asterisk qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="余额变动" onclick="modal('{:url(\'total\',[\'id\'=>$vo[\'id\']])}', '余额变动','80%','50%')"></i>
+
+                    <!--编辑资料-->
+                    <i class="fa fa-edit qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="编辑" onclick="modal('{:url(\'edit\',[\'id\'=>$vo[\'id\']])}', '编辑','80%','50%')"></i>
+                    <!--删除-->
+                    <!--<i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除" onclick="confirmUpdate('{:url(\'delete\')}','{$vo.id}','确定要删除吗？')"></i>-->
+                </td>
+            </tr>
+        {/volist}
+        <!--</tbody>-->
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.16.0/extensions/resizable/bootstrap-table-resizable.js"></script>
+<script type="text/javascript" src="/static/admin/js/plugins/bootstrap-table/colResizable-1.6.js"></script>
+<script>
+    //调用示例
+    layer.photos({
+        photos: '.layer-photos',
+    });
+    $(function(){
+        $("table").colResizable({
+            liveDrag:true,
+            gripInnerHtml:"<div class='grip'></div>",
+            draggingClass:"dragging",
+            resizeMode:'fit'
+        });
+    });
+</script>

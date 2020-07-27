@@ -1,0 +1,15 @@
+<div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="row">
+        {include file="tpl/label" label="[label]"/}
+        <div class="col-xs-9">
+            <input placeholder="[label]" id="[name]" name="[name]" value="{$[results]['[name]']??''}"
+                   class="form-control inline" type="text" [attr] autocomplete="off">
+        </div>
+    </div>
+</div>
+<script>
+    laydate.render({
+        elem: '#[name]',
+        type: 'datetime'
+    });
+</script>

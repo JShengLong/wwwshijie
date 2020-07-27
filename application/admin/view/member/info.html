@@ -1,0 +1,78 @@
+<head>
+    <meta charset="UTF-8">
+    <title>人员关系</title>
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            font-size: 62.5%;
+        }
+
+        body {
+            margin: 0 auto;
+            padding: 20px 10px;
+            font-size: 14px;
+            font-size: 1.4em;
+        }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
+        .demo {
+            overflow: auto;
+            min-height: 100px;
+            float: left;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/admin/css/plugins/jsTree/style.min.css"/>
+</head>
+<h1>我的团队</h1>
+<!--<button id="btn"></button>-->
+<div id="lazy" class="demo"></div>
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+
+<script src="__PUBLIC__/vakata-jstree/dist/jstree.min.js"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>-->
+<script src="/static/admin/js/plugins/jsTree/jstree.min.js"></script>
+<script>
+    var searchId = "{$searchId}"
+    var url = "/Admin/member/getNodes";
+    if (searchId) {
+        url += "?searchId=" + searchId;
+    }
+    $('#btn').click(function () {
+        alert(1);
+    })
+    $('#lazy').jstree({
+        "themes": {
+            "stripes": true,
+        },
+        "types": {
+            "default": {
+                "icon": "fa fa-user"
+            },
+            'nouser': {
+                "icon": 'fa fa-user-o'
+            }
+        },
+        "plugins": ["changed", "types"],
+        'core': {
+            'data': {
+                "url": url,
+                "method" : "GET",
+                "dataType" : 'json',
+                "data": function (node) {
+                    return {"id": node.id};
+                },
+                /*success: function (res) {
+                    if (res[0] == null) {
+                        layer.msg("未查询到相应结果！", {time:1500}, function () {
+                            window.location.href = "/Admin/Tree/index";
+                        });
+                    }
+                }*/
+            }
+        }
+    });
+</script>

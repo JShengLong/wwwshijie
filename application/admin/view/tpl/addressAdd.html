@@ -1,0 +1,46 @@
+<div class="form-group col-xs-12">
+    <div class="row">
+        {include file="tpl/label" label="[label]"/}
+        <div class="col-xs-9">
+            <div class="col-xs-4">
+                <div class="row">
+                    <select class="form-control" id="provinceId" name="provinceId" placeholder="省" onchange="changeProvince('[name]')">
+                        {volist name="lists.provinceList" id="vo"}
+                        {if condition="$key==$[results]['provinceId']"}
+                        <option value="{$key}" selected="selected">{$vo}</option>
+                        {else/}
+                        <option value="{$key}" >{$vo}</option>
+                        {/if}
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <select class="form-control" id="cityId" name="cityId" placeholder="市" onchange="changeCity('[name]')">
+                        {volist name="lists.cityList" id="vo"}
+                        {if condition="$key==$[results]['cityId']"}
+                        <option value="{$key}" selected="selected">{$vo}</option>
+                        {else/}
+                        <option value="{$key}" >{$vo}</option>
+                        {/if}
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <select class="form-control" id="areaId" name="areaId" placeholder="区" onchange="changeArea('[name]')" [attr]>
+                        {volist name="lists.areaList" id="vo"}
+                        {if condition="$key==$[results]['areaId']"}
+                        <option value="{$key}" selected="selected">{$vo}</option>
+                        {else/}
+                        <option value="{$key}" >{$vo}</option>
+                        {/if}
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

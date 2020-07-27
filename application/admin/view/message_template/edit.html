@@ -1,0 +1,18 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$data.id}">
+                {include file="tpl/input" results="data" name="title" label="消息模版标题" value="title" attr=''/}
+{include file="tpl/input" results="data" name="alert" label="消息模版内容" value="alert" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

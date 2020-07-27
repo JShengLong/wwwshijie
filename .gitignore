@@ -1,0 +1,8 @@
+.idea
+*.log
+runtime
+thinkphp
+vendor
+composer.lock
+hxc.lock
+public/uploads

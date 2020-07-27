@@ -1,0 +1,34 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('add')}">
+            <div class="form-group">
+                {include file="tpl/selectCol" results="data" name="pid" label="一级" value="" list="pid" attr=''/}
+
+                {include file="tpl/input" results="data" name="name" label="名称" value="" attr='data-rule="required;"'/}
+                {include file="tpl/integer" results="data" name="sortOrder" label="排序" value="" attr='data-rule="required;"'/}
+                <div style="margin-left:25%;color: red;">首页分类图片尺寸：84x84</div>
+                <div style="margin-left:25%;color: red;">专区分类图片尺寸：344x186</div>
+                {include file="tpl/singleImage" results="data" name="img" label="图片" value="" attr=''/}
+                {include file="tpl/selectCol" results="data" name="type" label="展示形式" value="" list="type" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#pid').change(function () {
+        // console.log($(this).val())
+        if($(this).val()!=0){
+            $('#type').parent().parent().parent().hide();
+        }
+        if($(this).val()==0){
+            $('#type').parent().parent().parent().show();
+        }
+    })
+</script>

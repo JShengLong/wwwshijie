@@ -1,0 +1,31 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('add')}">
+            <div class="form-group">
+                {include file="tpl/input" results="data" name="title" label="标题" value="" attr=''/}
+                <div style="margin-left:25%;color: red;">APP图片：750x446 小程序图片尺寸：750x320</div>
+                {include file="tpl/singleImage" results="data" name="img" label="图片" value="" attr=''/}
+                <div style="margin-left: 150px;color: red;">降序排序，即从大到小</div>
+
+                {include file="tpl/integer" results="data" name="sort" label="排序" value="" attr=''/}
+                {include file="tpl/selectCol" results="data" name="cate" label="类别" value="" list="cate" attr=''/}
+                {include file="tpl/selectCol" results="data" name="type" label="对象类型" value="" list="type" attr=''/}
+
+                {include file="tpl/integer" results="data" name="itemid" label="对象ID" value="" attr=''/}
+                <div style="color: red;margin-left:20%" >
+                    <div>备注说明：</div>
+                    <div>对象类型选择产品详情，则在对象ID中设置产品ID;</div>
+                    <div>对象类型选择产品分类则对象ID设置产品分类ID;</div>
+                    <div>对象类型选择图文说明，则对象ID设置活动管理中的ID信息。</div>
+                </div>
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

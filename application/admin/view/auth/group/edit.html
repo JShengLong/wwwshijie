@@ -1,0 +1,14 @@
+<div class="col-xs-12">
+	<div class="row">
+		<form class="form-horizontal" role="form" id="form" action="{:url('/admin/auth/edit')}">
+			<div class="form-group">
+				<input type="hidden" name="id" value="{$info.id}">
+				{include file="tpl/input" results="data" name="title" label="角色名称" value="title" attr='data-rule="required;"'/}
+				{include file="tpl/ztree" label="权限" results="data" name="rules" value=""/}
+			</div>
+			<div class="form-group" style="margin-top: 20px;">
+				{include file="tpl/button" label="保存"/}
+			</div>
+		</form>
+	</div>
+</div>

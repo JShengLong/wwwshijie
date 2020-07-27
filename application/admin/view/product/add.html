@@ -1,0 +1,68 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('add')}">
+            <div class="form-group">
+                {include file="tpl/selectCol" results="data" name="category1" label="商品一级分类" value="" list="category1" attr='onchange=ld()'/}
+                {include file="tpl/selectCol" results="data" name="p_category_id" label="商品二级分类" value="" list="category2" attr=''/}
+                {include file="tpl/input" results="data" name="p_name" label="商品名称" value="" attr=''/}
+                <div style="margin-left:25%;color: red;">图片尺寸：240x200</div>
+                {include file="tpl/singleImage" results="data" name="p_img" label="商品缩略图（商品列表图片）" value="" attr=''/}
+                <div style="margin-left:25%;color: red;">视频尺寸：800*800</div>
+                {include file="tpl/singleVideo" results="data" name="p_video" label="商品视频" value="" attr=''/}
+                <div style="margin-left:25%;color: red;">图片尺寸：800*800</div>
+                {include file="tpl/multiImage" results="data" name="p_imgs" label="商品图集（产品详情banner图片）" value="" attr=''/}
+
+                {include file="tpl/integer" results="data" name="p_oldprice" label="商品价格" value="" attr=''/}
+                {include file="tpl/integer" results="data" name="p_weight" label="商品重量（kg）" value="" attr=''/}
+                {include file="tpl/selectCol" results="data" name="p_storage_mode" label="储存方式" value="" list="p_storage_mode" attr=''/}
+
+
+                {include file="tpl/input" results="data" name="p_place_of_origin" label="产地" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_brand" label="品牌" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_name_of_factory" label="厂名" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_site" label="厂址" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_shelf_life" label="保质期" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_phone" label="联系电话" value="" attr=''/}
+
+                {include file="tpl/input" results="data" name="p_production_license" label="生产许可" value="" attr=''/}
+                {include file="tpl/textarea" results="data" name="p_ingredient_list" label="配料表" value="" attr=''/}
+
+
+                {include file="tpl/input" results="data" name="p_leibie" label="产品类别" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_isjinkou" label="是否进口" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_yuanchan" label="原产地" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_codes" label="商品条形码" value="" attr=''/}
+                <!--{include file="tpl/input" results="data" name="p_shiyan" label="食盐" value="" attr=''/}-->
+                {include file="tpl/input" results="data" name="p_garde" label="等级" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_shengchan" label="生产时期" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_shoumai" label="售卖方式" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_techan" label="特产" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_huohao" label="货号" value="" attr=''/}
+                {include file="tpl/input" results="data" name="p_baozhuang" label="包装规格" value="" attr=''/}
+                {include file="tpl/ueditor" results="data" name="p_html" label="详情页" value="" attr=''/}
+                {include file="tpl/selectCol" results="data" name="p_isUp" label="是否上架" value="" list="p_isUp" attr=''/}
+
+
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+   function ld() {
+       var pid=$('#category1').val();
+       $.ajax({
+           url:'/admin/product/ld',
+           data:{'pid':pid},
+           success:function (res) {
+            $('#p_category_id').html(res)
+           }
+       })
+   }
+</script>

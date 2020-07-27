@@ -1,0 +1,90 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="id" label="充值编号" attr=''/}
+        {include file="tpl/search" results="params" name="account" label="用户账号" attr=''/}
+        {include file="tpl/search" results="params" name="nickname" label="用户昵称" attr=''/}
+
+        <!--{include file="tpl/select" results="params" name="type" label="充值方式" list="type" attr='' /}-->
+        {include file="tpl/select" results="params" name="status" label="状态" list="status" attr='' /}
+        {include file="tpl/date" results="params" name="createTime1" label="创建时间开始" list="createTime" attr=''/}
+        {include file="tpl/date" results="params" name="createTime2" label="创建时间结束" list="createTime" attr=''/}
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">编号</th>
+            <th nowrap="nowrap">用户账号</th>
+            <th nowrap="nowrap">用户昵称</th>
+            <th nowrap="nowrap">充值金额</th>
+            <th nowrap="nowrap">驳回原因</th>
+            <th nowrap="nowrap">状态</th>
+            <th nowrap="nowrap">支付凭证</th>
+            <th nowrap="nowrap">充值时间</th>
+            <th nowrap="nowrap">完成时间</th>
+
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.id}</td>
+                <td nowrap="nowrap">{$vo.m_account}</td>
+                <td nowrap="nowrap">{$vo.m_nickname}</td>
+                <td nowrap="nowrap">{$vo.total}</td>
+                <td nowrap="nowrap">{$vo.info}</td>
+                <td nowrap="nowrap">{$lists.status[$vo.status]}</td>
+                <td nowrap="nowrap" class="layer-photos">
+                        <img src="{$vo.code}" layer-src="{$vo.code}" style="width:50px"/>
+                </td>
+                <td nowrap="nowrap">{$vo.createTime}</td>
+                <td nowrap="nowrap">{$vo.updateTime}</td>
+                <td nowrap="nowrap">
+                    {if condition="$vo.status eq 1"}
+                    <!--<i class="fa fa-check qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="通过审核" onclick="confirmUpdate('{:url(\'changeStatus\')}',['{$vo.id}','status',2],'审核通过')"></i>-->
+                    <i class="fa fa-check qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="通过审核" onclick="modal('{:url(\'changeStatus1\',[\'id\'=>$vo[\'id\']])}', '通过审核','80%','50%')"></i>
+                    <i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="审核驳回" onclick="modal('{:url(\'changeStatus2\',[\'id\'=>$vo[\'id\']])}', '审核驳回','80%','50%')"></i>
+                    <!--<i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="审核驳回" onclick="confirmUpdate('{:url(\'changeStatus\')}',['{$vo.id}','status',3],'审核驳回')"></i>-->
+                    {/if}
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>
+<script>
+    //调用示例
+    layer.photos({
+        photos: '.layer-photos',
+    });
+    $(function(){
+        $("table").colResizable({
+            liveDrag:true,
+            gripInnerHtml:"<div class='grip'></div>",
+            draggingClass:"dragging",
+            resizeMode:'fit'
+        });
+    });
+</script>

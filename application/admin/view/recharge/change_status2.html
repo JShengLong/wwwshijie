@@ -1,0 +1,16 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('changeStatus2')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$id}">
+                {include file="tpl/input" results="data" name="info" label="驳回原因" value="" attr=''/}
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

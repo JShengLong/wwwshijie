@@ -1,0 +1,30 @@
+{include file="tpl/style"/}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">变化积分</th>
+            <th nowrap="nowrap">变化之前的积分</th>
+            <th nowrap="nowrap">变化之后的积分</th>
+            <th nowrap="nowrap">创建时间</th>
+            <th nowrap="nowrap">变化详情</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td nowrap="nowrap">{$vo.b_id}</td>
+            <td nowrap="nowrap">
+                {if condition="$vo.b_isplus eq 1"}+{else/}-{/if}
+                {$vo.b_total}</td>
+            <td nowrap="nowrap">{$vo.b_before}</td>
+            <td nowrap="nowrap">{$vo.b_after}</td>
+            <td nowrap="nowrap">{$vo.b_createTime}</td>
+            <td nowrap="nowrap">{$vo.b_info}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>

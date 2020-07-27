@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{include file="common/base"/}
+{include file="common/right"/}
+{include file="common/fileinput"/}
+<style>
+    .bg{
+        background-image: url("/static/img/bg.png");
+        background-size:100%;
+        width: 300px;
+        height:150px;
+        background-repeat: no-repeat;
+        margin-left: 20px;
+        margin-top: 20px;
+        color: #fff;
+        float: left;
+        position: relative;
+    }
+    .name{
+        font-size: 20px;
+        margin-top: 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .num{
+        font-size: 30px;
+        margin-top: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .type{
+        position: absolute;
+        top: 50%;
+        right: 3%;
+        transform: translateY(-50%);
+        font-size: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content" style="width:80%; margin:0 auto;">
+    <!--<div class="row" style="font-size: 20px;">-->
+        <!--<h3><center>欢迎使用【{$sysName}】</center></h3>-->
+    <!--</div>-->
+</div>
+{volist name="list" id="vo"}
+<div class="bg">
+    <div class="name">
+        {$vo.name}
+    </div>
+    <div class="num">
+        {$vo.num}
+    </div>
+    <div class="type">
+        {$vo.type}
+    </div>
+</div>
+{/volist}
+</body>
+</html>

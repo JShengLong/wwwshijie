@@ -1,0 +1,19 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <div style="width: 80%">
+                    {include file="tpl/input" results="list" name="name" label="名称" value="name" attr='data-rule="required;"'/}
+                    {include file="tpl/singleImage" results="list" name="code" label="二维码" value="code" attr=''/}
+                    {include file="tpl/singleImage" results="list" name="img" label="背景图" value="img" attr=''/}
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="修改"/}
+            </div>
+        </form>
+    </div>
+</div>

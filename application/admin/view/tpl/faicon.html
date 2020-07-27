@@ -1,0 +1,13 @@
+<div class="form-group col-xs-12">
+    <div class="row">
+        {include file="tpl/label" label="[label]"}
+        <div class="col-xs-9">
+            <input id="[name]" name="[name]" value="{$[results]['[value]']??''}" type="text" class="form-control txt_boostrap_icon" placeholder="[label]" [attr]>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".txt_boostrap_icon").iconPicker();
+    });
+</script>

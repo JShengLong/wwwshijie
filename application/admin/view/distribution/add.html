@@ -1,0 +1,15 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('add')}">
+            <div class="form-group">
+                {include file="tpl/integer" results="data" name="parameter" label="参数（%）" value="" attr='data-rule="required;"'/}
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

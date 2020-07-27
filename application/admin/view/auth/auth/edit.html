@@ -1,0 +1,17 @@
+<div class="col-xs-12">
+	<div class="row">
+		<form class="form-horizontal" role="form" id="form" action="{:url('/admin/auth/editRule')}">
+			<div class="form-group">
+				<input type="hidden" name="id" value="{$data.id}">
+				{include file="tpl/selectCol" name="pid" results="data" label="父级" list="rulelist"/}
+				{include file="tpl/input" name="title" results="data" label="标题" value="title" attr='data-rule="required;"'/}
+				{include file="tpl/input" name="name" results="data" label="菜单规则" value="name" attr=''/}
+				{include file="tpl/faicon" name="faicon" results="data" label="图标" value="faicon" attr='data-rule="required;"'/}
+				{include file="tpl/integer" name="sort" results="data" value="sort" label="排序"/}
+			</div>
+			<div class="form-group" style="margin-top: 20px;">
+				{include file="tpl/button" label="保存"/}
+			</div>
+		</form>
+	</div>
+</div>

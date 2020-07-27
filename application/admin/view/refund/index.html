@@ -1,0 +1,135 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="sn" label="退款单号" attr=''/}
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <!--<div class="row">-->
+                <!--{include file='tpl/addBtn' url="add" height="80%" width="30%"/}-->
+                <!--</div>-->
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">退款商品</th>
+            <th nowrap="nowrap">退款商品数量</th>
+            <th nowrap="nowrap">退款商品单价</th>
+            <th nowrap="nowrap">退款商品总计</th>
+            <th nowrap="nowrap">退款单号</th>
+            <th nowrap="nowrap">退款类型</th>
+            <th nowrap="nowrap">退款状态</th>
+            <th nowrap="nowrap">退款原因</th>
+            <th nowrap="nowrap">退款金额</th>
+            <th nowrap="nowrap">退款积分</th>
+            <th nowrap="nowrap">用户昵称</th>
+            <th nowrap="nowrap">退款联系电话</th>
+            <!--<th nowrap="nowrap">退款说明</th>-->
+            <!--<th nowrap="nowrap">退款凭证</th>-->
+            <th nowrap="nowrap">申请退款时间</th>
+            <th nowrap="nowrap">店家同意/驳回时间</th>
+            <th nowrap="nowrap">成功退款时间</th>
+            <!--<th nowrap="nowrap">退货快递单号</th>-->
+            <!--<th nowrap="nowrap">收货人</th>-->
+            <!--<th nowrap="nowrap">收货电话</th>-->
+            <!--<th nowrap="nowrap">详细地址</th>-->
+
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td nowrap="nowrap">{$vo.id}</td>
+            <td nowrap="nowrap">{$vo.d_name}</td>
+            <td nowrap="nowrap">{$vo.d_num}</td>
+            <td nowrap="nowrap">{$vo.d_price}</td>
+            <td nowrap="nowrap">{$vo.d_total}</td>
+            <td nowrap="nowrap">{$vo.sn}</td>
+            <td nowrap="nowrap">{$vo.status|getDropdownlist='refundStatus',###}</td>
+            <td nowrap="nowrap">{$vo.refundReview|getDropdownlist='refundReview',###}</td>
+
+            <td nowrap="nowrap">{$vo.info}</td>
+            <td nowrap="nowrap">{$vo.total}</td>
+            <td nowrap="nowrap">{$vo.integral}</td>
+            <td nowrap="nowrap">{$vo.m_nickname}</td>
+            <td nowrap="nowrap">{$vo.rephone}</td>
+
+            <!--<td nowrap="nowrap">{$vo.info}</td>-->
+            <!--<td nowrap="nowrap">{$vo.certificate}</td>-->
+            <td nowrap="nowrap">{$vo.createtime}</td>
+            <td nowrap="nowrap">{$vo.shopTime}</td>
+            <td nowrap="nowrap">{$vo.endTime}</td>
+            <!--<td nowrap="nowrap">{$vo.snone}</td>-->
+            <!--<td nowrap="nowrap">{$vo.name}</td>-->
+            <!--<td nowrap="nowrap">{$vo.phone}</td>-->
+            <!--<td nowrap="nowrap">{$vo.address}</td>-->
+
+            <td nowrap="nowrap">
+                <!--编辑资料-->
+                <!--                    <i class="fa fa-edit qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="编辑" onclick="modal('{:url(\'edit\',[\'id\'=>$vo[\'id\']])}', '编辑','80%','50%')"></i>-->
+                {if condition="$vo.status eq 2"}
+                <!--待审核-->
+                {if condition="$vo.refundReview eq 1"}
+                <i class="fa fa-check qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="同意退货" onclick="modal('{:url(\'send\',[\'id\'=>$vo[\'id\']])}', '同意退货','50%','50%')"></i>
+                <i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="modal('{:url(\'reject\',[\'id\'=>$vo[\'id\']])}', '拒绝','50%','50%')"></i>
+
+                <!--<i class="fa fa-check qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="同意退货" onclick="confirmUpdate('{:url(\'send\')}','{$vo.id}','同意退货？')"></i>-->
+                <!--<i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="confirmUpdate('{:url(\'reject\')}','{$vo.id}','拒绝？')"></i>-->
+                {/if}
+                <!--店家同意-->
+                {if condition="$vo.refundReview eq 2"}
+                    <!--<i class="fa fa-cny qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="同意退款" onclick="confirmUpdate('{:url(\'return_check\')}','{$vo.id}','同意退款？')"></i>-->
+                <i class="fa fa-cny qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="同意退款" onclick="modal('{:url(\'return_check\',[\'id\'=>$vo[\'id\']])}', '同意退款','80%','50%')"></i>
+
+                <!--<i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="modal('{:url(\'reject\',[\'id\'=>$vo[\'id\']])}', '拒绝','50%','50%')"></i>-->
+                <!--<i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="modal('{:url(\'reject\',[\'id\'=>$vo[\'id\']])}', '拒绝','80%','50%')"></i>-->
+
+                {/if}
+
+                {if condition="$vo.express neq ''"}
+
+                <i class="fa fa-truck qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="物流信息"
+                   onclick="modal('{:url(\'logistics\',[\'id\'=>$vo[\'id\']])}', '物流信息','80%','30%')"></i>
+
+                {/if}
+
+                {/if}
+                <!--订单未支付退款？？-->
+                {if condition="$vo.status eq 1"}
+                {if condition="$vo.refundReview eq 1"}
+                <i class="fa fa-check qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="同意退款" onclick="confirmUpdate('{:url(\'return_check\')}','{$vo.id}','同意退款？')"></i>
+
+                <!--<i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="confirmUpdate('{:url(\'reject\')}','{$vo.id}','拒绝？')"></i>-->
+
+
+                <i class="fa fa-close qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="拒绝" onclick="modal('{:url(\'reject\',[\'id\'=>$vo[\'id\']])}', '拒绝','80%','50%')"></i>
+                {/if}
+                {/if}
+                <!--详细信息-->
+                <i class="fa fa-info-circle qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="详细信息" onclick="modal('{:url(\'info\',[\'id\'=>$vo[\'id\']])}', '详细信息','80%','80%')"></i>
+                <!--删除-->
+                <i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除" onclick="confirmUpdate('{:url(\'delete\')}','{$vo.id}','确定要删除吗？')"></i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>

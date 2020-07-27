@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>{$sysName}</title>
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/admin/css/animate.css" rel="stylesheet">
+    <link href="/static/admin/css/style.css" rel="stylesheet">
+    <link href="/static/admin/css/login.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+    <style>
+        .bg{
+            background: #18c8f6;
+            /*height: auto;*/
+            background: url(/static/admin/img/login-background.jpg) repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            color: rgba(255,255,255,.95);
+        }
+
+    </style>
+</head>
+
+<body class="signin" >
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                </div>
+                <div class="m-b"></div>
+                <ul class="m-b">
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <form method="post" action="index.html">
+                <p class="m-t-md" id="err_msg">登录到 {$sysName} 后台</p>
+                <input type="text" class="form-control uname" placeholder="请输入账号" value="" id="user_name" />
+                <input type="password" class="form-control pword m-b" placeholder="请输入密码" value="" id="password" />
+                <div style="margin-bottom:70px">
+                    <input type="text" class="form-control" placeholder="验证码" style="color:black;width:120px;float:left;margin:0px 0px;" name="code" id="code"/>
+                    <img id="verify" src="{:captcha_src()}" onclick="javascript:this.src='{:captcha_src()}?tm='+Math.random();" style="float: right;cursor: pointer;width: 46%;"/>
+                </div>
+                <input class="btn btn-success btn-block" id="login_btn" value="登录"/>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/static/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<script type="text/javascript">
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            $('#login_btn').click();
+        }
+    };
+    var lock = false;
+    $(function () {
+        $('#login_btn').click(function(){
+            if(lock){
+                return;
+            }
+            lock = true;
+            $('#err_msg').hide();
+            $('#login_btn').removeClass('btn-success').addClass('btn-danger').val('登陆中...');
+            var username = $('#user_name').val();
+            var password = $('#password').val();
+            var code = $('#code').val();
+            $.post("{:url('/admin/login/login')}",{'account':username, 'password':password, 'captcha':code},function(data){
+                lock = false;
+                if(data.code==1){
+                    $('#login_btn').val('登陆成功，请稍后').removeClass('btn-danger').addClass('btn-success');
+                }
+                if(data.code!=1){
+                    $('#login_btn').val('重新登录').removeClass('btn-danger').addClass('btn-success');
+
+                    $('#verify').attr('src', '{:captcha_src()}?tm='+Math.random());
+                    $('#code').val('');
+                    $('#err_msg').show().html("<span style='color:red'>"+data.msg+"</span>");
+                    return;
+                }else{
+                    window.location.href=data.data;
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

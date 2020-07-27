@@ -1,0 +1,16 @@
+<div class="form-group col-xs-12">
+    <div class="row">
+        {include file="tpl/label" label="[label]"}
+        <div class="col-xs-9">
+            <select class="form-control" id="[name]" name="[name]" placeholder="[label]" [attr]>
+                {volist name="lists.[list]" id="vo"}
+                    {if condition="isset($[results]) && $key==$[results]['[name]']"}
+                        <option value="{$key}" selected="selected">{$vo}</option>
+                    {else /}
+                        <option value="{$key}" >{$vo}</option>
+                    {/if}
+                {/volist}
+            </select>
+        </div>
+    </div>
+</div>

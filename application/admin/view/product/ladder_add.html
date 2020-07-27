@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>选项</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #dv{
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            margin: 0px auto 0px;
+        }
+        .removeclass{
+            color: red;
+        }
+        .form-control1{
+            width: 100%;
+            height: 34px;
+            font-size: 14px;
+            line-height: 1.42857;
+            color: rgb(85, 85, 85);
+            background-color: rgb(255, 255, 255);
+            background-image: none;
+            box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px inset;
+            padding: 6px 12px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(204, 204, 204);
+            border-image: initial;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        }
+        .hl{
+            border-color: rgb(204, 204, 204);
+            border-width: 0.5px;
+            border-style: solid;
+            width: 80%;
+            /*border: #154145 0.5px solid;*/
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<a href="#" id="AddMoreFileBox" class="btn btn-default btn-block">添加更多阶梯价格</a>
+<br/>
+
+
+<div id="InputsWrapper">
+    <div>
+        <label>满足数量：</label>
+        <input type="number" style="width: 20%;" class="form-control1" name="mytext[]" id="num_" value=""/>
+        <label>价格：</label>
+        <input type="number" style="width: 20%" class="form-control1" name="mytext[]" id="price_" value=""/>
+        <label>阶级：</label>
+        <input type="number" style="width: 20%" class="form-control1" name="mytext[]" id="sort_" value=""/>
+        <a href="#" class="removeclass">&nbsp;&nbsp;&nbsp;删除</a>
+        <div class="hl"></div>
+    </div>
+
+</div>
+<a href="#" id="save" style="color: #fff;background-color: #337ab7;border-color: #2e6da4;" class="btn btn-default btn-block">保存</a>
+<br/>
+<script>
+    var key={$keys};
+    var hid={$hid};
+    $(document).ready(function() {
+        var MaxInputs       = 1000;
+        var InputsWrapper   = $("#InputsWrapper");
+        var AddButton       = $("#AddMoreFileBox");
+        var x = InputsWrapper.length;
+        var FieldCount=1;
+        $(AddButton).click(function (e)
+        {
+            if(x <= MaxInputs)
+            {
+                FieldCount++;
+                $(InputsWrapper).append('<div>' +
+                    '<label>满足数量：</label>&nbsp;'+
+                    '<input type="number" style="width: 20%"  class="form-control1" name="mytext[]" id="num_'+ FieldCount +'" value=""/>&nbsp;' +
+                    '<label>价格：</label>&nbsp;'+
+                    '<input type="number" style="width: 20%"  class="form-control1" name="mytext[]" id="price_'+ FieldCount +'" value=""/>' +
+                    '<label>阶级：</label>&nbsp;'+
+                    '<input type="number" style="width: 20%"  class="form-control1" name="mytext[]" id="sort_'+ FieldCount +'" value=""/>' +
+                    '<a href="#" class="removeclass">&nbsp;&nbsp;&nbsp;删除' +
+                    '</a>' +
+                    '<div class="hl"></div>'+
+                    '</div>'
+                );
+                key=key+1;
+                x++;
+            }
+            return false;
+        });
+        $("body").on("click",".removeclass", function(e){ //user click on remove text
+            key= key-1;
+            $(this).parent('div').remove(); //remove text box
+            return false;
+        })
+    });
+    $('#save').click(function () {
+        layer.confirm('确定要保存吗？' , {btn: ['确认','取消']},function() {
+            var result = '';
+            var num = 0;
+            var aa = 1;
+            $('.form-control1').each(function () {
+                if ($(this).val() == '') {
+                    layer.msg('请填写完整的信息');
+                    aa = 0;
+                }
+                num = num + 1
+                result = result + $(this).val() + ',';
+            });
+            console.log(num, result,hid);
+            if (aa == 1) {
+                $.ajax({
+                    type: "post",
+                    url: '/admin/product/ladder_add',
+                    data: {"num": num, "result": result, 'id': hid},
+                    beforeSend: function (data) {
+                        loadingFlag =
+                            layer.msg(
+                                '正在更新.....',
+                                {icon: 16, shade: 0.5, shadeClose: false, time: 60000}
+                            );
+                    },
+                    success: function (data) {
+                        layer.close(loadingFlag);
+                        if (data.code == 0) {
+                            // layer.msg(data.msg, {icon: 1},function () {
+                                // 重新加载父页面
+                                window.parent.location.reload(true);
+                            // });
+                        } else {
+                            layer.msg(data.msg, {icon: 5}, function () {
+                                window.location.reload(true);
+                            });
+                        }
+                    }
+                })
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

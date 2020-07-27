@@ -1,0 +1,34 @@
+<script src="/static/admin/plugins/laydate/laydate.js"></script>
+<script>
+    $(function () {
+        /*模糊精确搜索*/
+        $(".condition .btn").click(function () {
+            $(this).siblings().removeClass("activity");
+            $(this).addClass("activity");
+            $(this).parent().prev().val($(this).val())
+        });
+    })
+</script>
+<style>
+    .condition .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        outline: none;
+    }
+
+    .activity {
+        background-color: #1AB394;
+        border-color: #1AB394;
+    }
+
+    @media screen and (max-width: 768px) {
+        body {
+            font-size: 11px;
+        }
+
+        .control-label {
+            text-align: right;
+            margin-top: 8.5px;
+        }
+    }
+</style>

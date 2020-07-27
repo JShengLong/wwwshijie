@@ -1,0 +1,63 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="m_nickname" label="销售人员" attr=''/}
+     {include file="tpl/date" results="params" name="createtimeStart" label="时间开始" attr=''/}
+        {include file="tpl/date" results="params" name="createtimeEnd" label="时间结束" attr=''/}
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">序号</th>
+            <th nowrap="nowrap">销售人员</th>
+            <th nowrap="nowrap">推荐总客户人数</th>
+            <th nowrap="nowrap">推荐客户总采购金额</th>
+            <th nowrap="nowrap">积分总数</th>
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.id}</td>
+                <td nowrap="nowrap">{$vo.m_nickname}</td>
+                <td nowrap="nowrap">{$vo.member_num}</td>
+                <td nowrap="nowrap">{$vo.total_num}</td>
+                <td nowrap="nowrap">{$vo.m_integral_num}</td>
+
+                <td nowrap="nowrap">
+                    <i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="推荐客户列表" onclick="modal('{:url(\'member_list\',[\'id\'=>$vo[\'id\']])}', '推荐客户列表','80%','80%')">&nbsp; </i>
+
+                 </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>
+<script>
+    //调用示例
+    layer.photos({
+        photos: '.layer-photos',
+    });
+</script>

@@ -1,0 +1,43 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$data.id}">
+                {include file="tpl/selectCol" results="data" name="pid" label="一级" value="pid" list="pid" attr=''/}
+
+                {include file="tpl/input" results="data" name="name" label="名称" value="name" attr='data-rule="required;"'/}
+                {include file="tpl/integer" results="data" name="sortOrder" label="排序" value="sortOrder" attr='data-rule="required;"'/}
+                <div style="margin-left:25%;color: red;">首页分类图片尺寸：84x84</div>
+                <div style="margin-left:25%;color: red;">专区分类图片尺寸：344x186</div>
+                {include file="tpl/singleImage" results="data" name="img" label="图片" value="img" attr=''/}
+                {include file="tpl/selectCol" results="data" name="type" label="展示形式" value="type" list="type" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        if($('#pid').val()!=0){
+            $('#type').parent().parent().parent().hide();
+        }
+        if($('#pid').val()==0){
+            $('#type').parent().parent().parent().show();
+        }
+    })
+    $('#pid').change(function () {
+        // console.log($(this).val())
+        if($(this).val()!=0){
+            $('#type').parent().parent().parent().hide();
+        }
+        if($(this).val()==0){
+            $('#type').parent().parent().parent().show();
+        }
+    })
+</script>

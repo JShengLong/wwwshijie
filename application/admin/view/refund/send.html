@@ -1,0 +1,18 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('send')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$id}">
+            {include file="tpl/input" results="data" name="name" label="联系人" value="name" attr=''/}
+            {include file="tpl/input" results="data" name="phone" label="联系电话" value="phone" attr=''/}
+            {include file="tpl/input" results="data" name="address" label="收货地址" value="address" attr=''/}
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

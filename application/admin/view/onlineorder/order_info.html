@@ -1,0 +1,54 @@
+{include file="tpl/style"/}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">商品名称</th>
+            <th nowrap="nowrap">商品图片</th>
+            <th nowrap="nowrap">商品规格</th>
+            <th nowrap="nowrap">价格</th>
+            <th nowrap="nowrap">数量</th>
+            <th nowrap="nowrap">总计</th>
+            <th nowrap="nowrap">阶梯价格</th>
+            <th nowrap="nowrap">商品状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td nowrap="nowrap">{$vo.d_id}</td>
+            <td nowrap="nowrap">{$vo.d_name}</td>
+            <td nowrap="nowrap" class="layer-photos">
+                <img layer-src="{$vo.d_img}" src="{$vo.d_img}" alt="" style="width: 30px">
+            </td>
+            <td nowrap="nowrap">{$vo.d_sku}</td>
+            <td nowrap="nowrap">￥{$vo.d_price}</td>
+            <td nowrap="nowrap">{$vo.d_num}</td>
+            <td nowrap="nowrap">￥{$vo.d_total}</td>
+            <td nowrap="nowrap">￥{$vo.d_price_ladder}</td>
+            <td nowrap="nowrap">
+                {if condition="$vo.d_refund eq 1"}
+                未提交退款
+                {/if}
+                {if condition="$vo.d_refund eq 2"}
+                退款中
+                {/if}
+                {if condition="$vo.d_refund eq 3"}
+                退款成功
+                {/if}
+                {if condition="$vo.d_refund eq 4"}
+                再次退款
+                {/if}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script>
+    //调用示例
+    layer.photos({
+        photos: '.layer-photos',
+    })
+</script>

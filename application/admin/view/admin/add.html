@@ -1,0 +1,20 @@
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('/admin/Admin/add')}">
+            <div class="form-group">
+                {include file="tpl/input" results="data" name="account" label="账号" value=""
+                attr='data-rule="required;"'/}
+                {include file="tpl/password" results="data" name="password" label="密码" value=""
+                attr='data-rule="required;"'/}
+                {include file="tpl/password" results="data" name="paypassword" label="支付密码" value=""
+                attr='data-rule="required;"'/}
+                {include file="tpl/input" results="data" name="name" label="姓名" value="" attr='data-rule="required;"'/}
+                {include file="tpl/selectCol" name="group_id" results="data" label="工作职务" list="rolelist"/}
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

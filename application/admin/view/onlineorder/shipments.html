@@ -1,0 +1,73 @@
+<div class="table-responsive">
+    <form class="form-horizontal" role="form" id="form" action="{:url('shipments')}">
+        <table class="table table-bordered">
+            <input type="hidden" value="{$data.o_id}" name="id">
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    收货人信息
+                </th>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">姓名</td>
+                <td nowrap="nowrap">{$data.o_name}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">手机</td>
+                <td nowrap="nowrap">{$data.o_phone}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    收货人地址
+                </th>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">地区</td>
+                <td nowrap="nowrap">{$data.name_path}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">详细地址</td>
+                <td nowrap="nowrap">{$data.o_address}</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    物流信息
+                </th>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">物流公司<br>（单个物流单号请选择）</td>
+                <td nowrap="nowrap">{include file="tpl/selectCol" results="params" name="express" list="express"
+                    label="" /}
+                </td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">单物流单号<br>（单个物流单号请填写）</td>
+                <td nowrap="nowrap">
+                    {include file="tpl/input" results="data" name="expresssn" label="" value="" attr=''/}
+
+                    <!--<input type="text" name="expresssn" results="data">-->
+                </td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">多物流单号<br>（按照格式书写）<br>（物流公司名称请填写规范）</td>
+                <td nowrap="nowrap">
+                    <div class="form-group col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="row text-right">
+                                    <label class="control-label qg-control-label"></label>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <textarea id="" name="expresssns" class="form-control"
+                                          placeholder="申通快递,201903012215|中通快递,20199929595" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <th colspan="2" style="text-align:center;" border="0">
+                {include file="tpl/button" label="发货"/}
+            </th>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,84 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="account" label="评价人" attr=''/}
+        {include file="tpl/select" results="params" name="star" label="评价星级" list="star" attr='' /}
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+<!--                    {include file='tpl/addBtn' url="add" height="80%" width="30%"/}-->
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">评价的商品</th>
+            <th nowrap="nowrap">评价详情</th>
+            <th nowrap="nowrap">评价星级</th>
+            <th nowrap="nowrap">评价时间</th>
+            <th nowrap="nowrap">评价人</th>
+            <th nowrap="nowrap">订单编号</th>
+            <th nowrap="nowrap">是否显示</th>
+
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.id}</td>
+                <td nowrap="nowrap">{$vo.pname}</td>
+                <td nowrap="nowrap"><i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="点击查看详情页" onclick="modal('{:url(\'comment_info\', [\'id\'=>$vo[\'id\']])}', '商品详情','90%','1100px')">点击查看详情页</i>
+                </td>
+                <td nowrap="nowrap">{$vo.star}</td>
+                <td nowrap="nowrap">{$vo.createtime}</td>
+
+                <td nowrap="nowrap">{$vo.account}</td>
+                <td nowrap="nowrap">{$vo.order_sn}</td>
+                <td nowrap="nowrap">
+                    <div class="btn-group">
+                        {if condition="$vo.is_show eq 1"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','is_show','2'],'确定要隐藏？')" class="btn btn-success btn-xs">
+                            {$vo.is_show|getDropdownlist='is_show',###}
+                        </button>
+                        {/if}
+                        {if condition="$vo.is_show eq 2"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'change_status\')}',['{$vo.id}','is_show','1'],'确定要显示吗？')" class="btn btn-danger btn-xs">
+                            {$vo.is_show|getDropdownlist='is_show',###}
+                        </button>
+                        {/if}
+                    </div>
+                </td>
+
+                <td nowrap="nowrap">
+                    <!--编辑资料-->
+<!--                    <i class="fa fa-edit qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="编辑" onclick="modal('{:url(\'edit\',[\'id\'=>$vo[\'id\']])}', '编辑','80%','50%')"></i>-->
+<!--                    <i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip"-->
+<!--                       data-placement="top" title="查看详细"-->
+<!--                       onclick="modal('{:url(\'comment_info\',[\'id\'=>$vo[\'id\']])}', '详情','80%','50%')"></i>-->
+                    <!--删除-->
+                    <i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除" onclick="confirmUpdate('{:url(\'delete\')}','{$vo.id}','确定要删除吗？')"></i>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>

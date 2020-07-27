@@ -1,0 +1,48 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('index')}">
+            <div class="form-group">
+                {include file="tpl/selectCol" results="data" name="force" label="是否强制更新" value="force" list="force"
+                attr=''/}
+                {include file="tpl/singleVideo" results="data" name="url" label="安装包" value="url" attr=''/}
+                {include file="tpl/input" results="data" name="version" label="版本号" value="version" attr=''/}
+                {include file="tpl/datetime1" results="data" name="updateTime" label="更新时间" value="updateTime" attr=''/}
+                {include file="tpl/textarea" results="data" name="content" label="更新内容" value="content" attr=''/}
+
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-sm-offset-3 col-md-offset-4 col-lg-offset-4">
+                    <div type="button" class="btn btn-primary btn-block" onclick="submit()">保存</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function submit() {
+        let url = $("#url").val();
+        let force = $("#force").val();
+        let version = $("#version").val();
+        let updateTime = $("#updateTime").val();
+        let content = $("#content").val();
+        $.ajax({
+            url: '/admin/Edition/index',
+            data: {
+                url:url,
+                force:force,
+                version:version,
+                updateTime:updateTime,
+                content:content,
+            },
+            method:'post',
+            success:function (res) {
+                layer.msg(res.msg);
+            }
+        })
+
+    }
+</script>

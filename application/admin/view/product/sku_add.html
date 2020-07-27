@@ -1,0 +1,28 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('sku_add')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$id}">
+                {if condition="$data.name eq ''"}
+                {include file="tpl/input" results="data" name="name" label="规格名称" value="" attr='data-rule="required;"'/}
+                {/if}
+                {if condition="$data.name neq ''"}
+                {include file="tpl/input" results="data" name="name" label="规格名称" value="name" attr='readonly'/}
+                {/if}
+                {include file="tpl/input" results="data" name="canshu" label="规格参数" value="" attr='data-rule="required;"'/}
+
+                {include file="tpl/integer" results="data" name="price" label="价格" value="" attr='data-rule="required;"'/}
+                {include file="tpl/integer" results="data" name="weight" label="重量（kg）" value="" attr='data-rule="required;"'/}
+                {include file="tpl/integer" results="data" name="stock" label="库存" value="" attr='data-rule="required;"'/}
+
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

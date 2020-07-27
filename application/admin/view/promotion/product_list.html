@@ -1,0 +1,73 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <div class="row">
+                    <a class="btn btn-default btn-block" href="javascript:void(0)" onclick="modal('/admin/promotion/addProductList?id={$id}','添加','80%','80%')">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap">ID</th>
+            <th nowrap="nowrap">商品名称</th>
+            <th nowrap="nowrap">商品图片</th>
+            <th nowrap="nowrap">是否推荐</th>
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.id}</td>
+                <td nowrap="nowrap">{$vo.p_name}</td>
+                <td nowrap="nowrap" class="layer-photos">
+                    <img layer-src="{$vo.p_img}" src="{$vo.p_img}" alt="" style="width: 30px">
+                </td>
+                <td nowrap="nowrap">
+                    <div class="btn-group">
+                        {if condition="$vo.tuijian eq 1"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'changeStatus\')}',['{$vo.id}','{$id}','2'],'确定要推荐吗？')" class="btn btn-danger  btn-xs">
+                            {$lists.type[$vo.tuijian]}
+                        </button>
+                        {/if}
+                        {if condition="$vo.tuijian eq 2"}
+                        <button type="button" onclick="confirmUpdate('{:url(\'changeStatus\')}',['{$vo.id}','{$id}','1'],'确定要取消推荐吗？')" class="btn btn-success  btn-xs">
+                            {$lists.type[$vo.tuijian]}
+                        </button>
+                        {/if}
+                    </div>
+                </td>
+                <td nowrap="nowrap">
+                    <!--删除-->
+                    <i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除" onclick="confirmUpdate('{:url(\'deleteProductList\')}',['{$vo.id}','{$id}'],'确定要删除吗？')"></i>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script>
+    //调用示例
+    layer.photos({
+        photos: '.layer-photos',
+    });
+</script>

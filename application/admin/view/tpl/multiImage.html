@@ -1,0 +1,55 @@
+<div class="form-group">
+    <div id="[name]Content">
+        <input type='hidden' name='[name]' id='[name]' value='{$[results]["[name]"]??""}'>
+        <?php $imgsCus = isset($data) && $[results]["[name]_arr"]?$[results]["[name]_arr"]:"";?>
+        <?php $[name] = generate_multi_image($imgsCus); ?>
+    </div>
+    {include file="tpl/label" label="[label]"}
+    <div class="col-xs-9">
+        <input id="[name]File" name="[name]File" type="file" multiple class="file-loading">
+        <script>
+            $(function(){
+                var $img = $("#" + "[name]");
+                var $imgFile = $("#" + "[name]File");
+
+                $imgFile.fileinput({
+                    language: 'zh',
+                    uploadUrl: "{:url('Tool/uploadImage', ['filename'=>'[name]File'])}",
+                    uploadAsync: true,
+                    minFileCount: 1,
+                    maxFileCount: 10,
+                    overwriteInitial: true,
+                    showUpload: false,
+                    layoutTemplates: {actionZoom:""},
+                    initialPreview: {$[name].preview},
+                    initialPreviewAsData: true,
+                    initialPreviewFileType: 'image',
+                    initialPreviewConfig: {$[name].previewConfig},
+                    purifyHtml: true,
+                    uploadExtraData: {
+                        img_key: "1000",
+                        img_keywords: "happy, places",
+                    }
+                }).on("filebatchselected", function(event, files) {
+                    // 自动上传
+                    $(this).fileinput("upload");
+                }).on('fileuploaded', function(event, data, id) {
+                    if(data.response)
+                    {
+                        if (data.response.status == 0)
+                        {
+                            //获取图像URL
+                            var url = data.response.url;
+                            $("#" + "[name]_str").remove();
+                            $("#" + "[name]Content").append("<input type='hidden' name='[name][]' id='[name]_" + id + "' value='" + url + "'>");
+                            $img.val(url);
+                        }
+                    }
+                }).on('fileclear', function(event, id) { $("#" + "[name]Content").html("");
+                }).on('filesuccessremove', function(e, id) { $("#" + "[name]_" + id).remove();
+                }).on('filedeleted', function(e, id) { $("#" + "[name]_" + id).remove();
+                });
+            });
+        </script>
+    </div>
+</div>

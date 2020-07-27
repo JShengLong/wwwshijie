@@ -1,0 +1,15 @@
+{include file="tpl/style"/}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <div class="layui-card">
+            <div class="layui-card-header"style="font-weight:bold;font-size: 18px">评价内容</div>
+            <div class="layui-card-body">
+                {$info.comment}
+            </div>
+            <div class="layui-card-header" style="font-weight:bold;font-size: 18px">评价图片</div>
+            <div class="layui-card-body">
+                {$info.img|imgArr=$info.img}
+            </div>
+        </div>
+    </table>
+</div>

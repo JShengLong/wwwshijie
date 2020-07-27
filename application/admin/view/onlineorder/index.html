@@ -1,0 +1,184 @@
+{include file="tpl/style"/}
+<form role="form" id="searchForm" action="{:url('index')}" method='post' class="form-horizontal">
+    <div class="form-group">
+        {include file="tpl/search" results="params" name="m_account" label="会员账号" attr=''/}
+        {include file="tpl/search" results="params" name="mid" label="会员id" attr=''/}
+        {include file="tpl/search" results="params" name="o_pname" label="推荐人" attr=''/}
+        {include file="tpl/search" results="params" name="o_sn" label="订单编号" attr=''/}
+        {include file="tpl/search" results="params" name="o_name" label="收货人姓名" attr=''/}
+        {include file="tpl/search" results="params" name="o_phone" label="收货人电话" attr=''/}
+        {include file="tpl/select" results="params" name="o_status" label="订单状态" list="o_status" attr=''/}
+        {include file="tpl/select" results="params" name="o_distribution_mode" label="配送方式" list="o_distribution_mode" attr=''/}
+        {include file="tpl/select" results="params" name="pageSize" label="分页数量" list="pageSize" attr=''/}
+        <!--{include file="tpl/datetime" results="params" name="o_createtime" label="下单时间" attr=''/}-->
+        <div class="col-xs-12">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-left">
+                <a class="btn btn-default btn-block" style="background-color: green;color: white;" href="/Admin/Onlineorder/export_excel">
+                    <i class="fa fa-download"></i>&nbsp;&nbsp;导出
+                </a>
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                <div class="row">
+                    <span>
+                        {include file="tpl/excel"  height="650px" width="550px"/}
+
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 pull-right">
+                <div class="row">
+                    {include file="tpl/searchBtn" /}
+                    {include file="tpl/reloadBtn" /}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th nowrap="nowrap"></th>
+            <th nowrap="nowrap">订单编号</th>
+            <th nowrap="nowrap">会员账号</th>
+            <th nowrap="nowrap">推荐人</th>
+            <th nowrap="nowrap">订单状态</th>
+            <th nowrap="nowrap">支付类型</th>
+            <th nowrap="nowrap">订单总金额</th>
+            <th nowrap="nowrap">商品总价格</th>
+            <th nowrap="nowrap">运费</th>
+            <th nowrap="nowrap">积分抵扣金额</th>
+            <th nowrap="nowrap">优惠价格</th>
+            <th nowrap="nowrap">优惠方式</th>
+            <th nowrap="nowrap">实付款</th>
+            <th nowrap="nowrap">订单商品总数量</th>
+            <th nowrap="nowrap">配送方式</th>
+            <th nowrap="nowrap">收货人姓名</th>
+            <th nowrap="nowrap">收货人电话</th>
+            <th nowrap="nowrap">地址</th>
+            <th nowrap="nowrap">下单时间</th>
+            <th nowrap="nowrap">支付时间</th>
+            <th nowrap="nowrap">发货时间</th>
+            <th nowrap="nowrap">完成时间</th>
+            <th nowrap="nowrap">订单备注</th>
+
+            <th nowrap="nowrap">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td nowrap="nowrap">{$vo.o_id}</td>
+                <td nowrap="nowrap">{$vo.o_sn}</td>
+                <td nowrap="nowrap">{$vo.m_account}</td>
+                <td nowrap="nowrap">{$vo.o_pname}</td>
+
+                <td nowrap="nowrap">
+                    {if condition="$vo.o_distribution_mode neq 2"}
+                        {$lists.o_status[$vo.o_status]}
+                    {/if}
+                    {if condition="$vo.o_distribution_mode eq 2"}
+                        {if condition="$vo.o_status eq 1"}
+                            待支付
+                        {/if}
+                        {if condition="$vo.o_status eq 3"}
+                            待取货
+                        {/if}
+                        {if condition="$vo.o_status eq 4"}
+                            已完成
+                        {/if}
+                        {if condition="$vo.o_status eq 5"}
+                            已评价
+                        {/if}
+                        {if condition="$vo.o_status eq 6"}
+                            已取消
+                        {/if}
+                        {if condition="$vo.o_status eq 7"}
+                            交易关闭
+                        {/if}
+                    {/if}
+                </td>
+                <td nowrap="nowrap">
+                    {if condition="$vo.o_payType eq 1"}
+                    微信
+                    {/if}
+                    {if condition="$vo.o_payType eq 2"}
+                    支付宝
+                    {/if}
+                    {if condition="$vo.o_payType eq 3"}
+                    余额
+                    {/if}
+                </td>
+                <td nowrap="nowrap">￥{$vo.o_total}</td>
+                <td nowrap="nowrap">￥{$vo.o_ptotal}</td>
+                <td nowrap="nowrap">￥{$vo.o_freight}</td>
+                <td nowrap="nowrap">￥{$vo.o_integral}</td>
+                <td nowrap="nowrap">
+                    {if condition="$vo.o_discount neq 0|$vo.o_discount neq ''"}
+                    ￥{$vo.o_discount}
+                    {/if}
+                </td>
+                <td nowrap="nowrap">
+                    {if condition="$vo.o_discount_type eq 1"}
+                        商品价格
+                    {/if}
+                    {if condition="$vo.o_discount_type eq 2"}
+                    运费
+                    {/if}
+                </td>
+                <td nowrap="nowrap">￥{$vo.o_actual_payment}</td>
+                <td nowrap="nowrap">{$vo.o_num}</td>
+                <td nowrap="nowrap">{$lists.o_distribution_mode[$vo.o_distribution_mode]}</td>
+                <td nowrap="nowrap">{$vo.o_name}</td>
+                <td nowrap="nowrap">{$vo.o_phone}</td>
+                <td nowrap="nowrap">{$vo.o_name_path}{$vo.o_address}</td>
+                <td nowrap="nowrap">{$vo.o_createtime}</td>
+                <td nowrap="nowrap">{$vo.o_paytime}</td>
+                <td nowrap="nowrap">{$vo.o_sendtime}</td>
+                <td nowrap="nowrap">{$vo.o_endtime}</td>
+                <td nowrap="nowrap">{$vo.o_remark}</td>
+
+
+                <td nowrap="nowrap">
+                    <i class="fa fa-file-text-o qg-op-btn qg-tooltip" data-toggle="tooltip"
+                       data-placement="top" title="查看详细"
+                       onclick="modal('{:url(\'order_info\',[\'id\'=>$vo[\'o_id\']])}', '详情','80%','50%')"></i>
+                    {if condition="$vo.o_status ==1 && ($vo.o_discount==0|$vo.o_discount=='')"}
+                    <i class="fa fa-pencil qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="编辑" onclick="modal('{:url(\'edits\',[\'id\'=>$vo[\'o_id\']])}','编辑','80%','80%')"></i>
+                    {/if}
+                    {if condition="($vo.o_status == 2) and ($vo.o_distribution_mode == 1)"}
+                    <i class="fa fa-send-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="发货" onclick="modal('{:url(\'shipments1\',[\'id\'=>$vo[\'o_id\']])}','确定要发货吗？','80%','80%')"></i>
+                    {/if}
+                    {if condition="($vo.o_status == 2) and ($vo.o_distribution_mode == 3)"}
+                    <i class="fa fa-send-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="发货"
+                       onclick="modal('{:url(\'shipments\',[\'id\'=>$vo[\'o_id\']])}','确定要发货吗？','80%','80%')"></i>
+                    {/if}
+                    {if condition="($vo.o_status == 2) and ($vo.o_distribution_mode == 4)"}
+                    <i class="fa fa-send-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="发货"
+                       onclick="modal('{:url(\'shipments1\',[\'id\'=>$vo[\'o_id\']])}','确定要发货吗？','80%','80%')"></i>
+                    {/if}
+                    {if condition="$vo.o_distribution_mode eq 3"}
+                        {if condition="$vo.o_status == 4"}
+                        <i class="fa fa-truck qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="物流信息"
+                        onclick="modal('{:url(\'logistics\',[\'id\'=>$vo[\'o_id\']])}', '物流信息','80%','30%')"></i>
+                        {/if}
+                        {if condition="$vo.o_status == 3"}
+                        <i class="fa fa-truck qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="物流信息"
+                        onclick="modal('{:url(\'logistics\',[\'id\'=>$vo[\'o_id\']])}', '物流信息','80%','30%')"></i>
+                        {/if}
+                    {/if}
+                    {if condition="($vo.o_distribution_mode == 1) or ($vo.o_distribution_mode == 3) or ($vo.o_distribution_mode == 4)"}
+                    <i class="fa fa-share-alt qg-op-btn qg-tooltip" data-toggle="tooltip" data-placement="top" title="收货信息" onclick="modal('{:url(\'receiptedit\',[\'id\'=>$vo[\'o_id\']])}', '收货信息','80%','50%')"></i>
+                    {/if}
+                    <!--删除-->
+                    <i class="fa fa-trash-o qg-tooltip qg-op-btn" data-toggle="tooltip" data-placement="top" title="删除" onclick="confirmUpdate('{:url(\'delete\')}','{$vo.o_id}','确定要删除吗？')"></i>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="float: right;">{$pagelist}</div>
+</div>

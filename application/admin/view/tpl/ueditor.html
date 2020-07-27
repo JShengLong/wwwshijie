@@ -1,0 +1,40 @@
+<div class="form-group col-xs-12">
+    <div class="row">
+        {include file="tpl/label" label="[label]"/}
+        <div class="col-xs-9">
+            <!-- 加载编辑器的容器 -->
+            <script id="[name]" name="[name]" type="text/plain">
+                {$[results].[name]??''}
+            </script>
+            <!-- 实例化编辑器 -->
+            <script type="text/javascript">
+                var ue = UE.getEditor('[name]',{
+                    initialFrameHeight:500,
+                    serverUrl: "{:url('Tool/ueditor')}",
+                    toolbars: [[
+                        'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                        'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                        'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                        'directionalityltr', 'directionalityrtl', 'indent', '|',
+                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                        'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', 'insertvideo', '|',
+                        'simpleupload', 'insertimage', 'emotion','pagebreak', '|',
+                        'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+                        'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+                        'print', 'preview', 'searchreplace', 'drafts', 'help'
+                    ]]
+                });
+
+                ue.ready(function() {
+                    txt = ue.getContentTxt();
+                    if(!txt){
+                        //设置编辑器的内容
+                        ue.setContent('<p><p style="display:none">1</p></p>');
+                    }
+
+                });
+            </script>
+        </div>
+    </div>
+</div>

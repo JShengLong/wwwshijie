@@ -1,0 +1,29 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$data.id}">
+                {include file="tpl/integer" results="data" name="id" label="提现申请" value="id" attr=''/}
+{include file="tpl/selectCol" results="data" name="member_id" label="会员id" value="member_id" list="hxc" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="account" label="会员账号" value="account" attr=''/}
+{include file="tpl/selectCol" results="data" name="status" label="提现状态：1申请中，2成功，3拒绝" value="status" list="hxc" attr=''/}
+{include file="tpl/input" results="data" name="apply_money" label="提现金额,扣除手续费后的金额" value="apply_money" attr=''/}
+{include file="tpl/input" results="data" name="apply_poundage" label="提现手续费" value="apply_poundage" attr=''/}
+{include file="tpl/input" results="data" name="apply_balance" label="申请提现的金额，" value="apply_balance" attr=''/}
+{include file="tpl/datetime" results="params" name="createtime" label="申请时间" value="createtime" attr=''/}
+{include file="tpl/datetime" results="params" name="updatetime" label="更新时间" value="updatetime" attr=''/}
+{include file="tpl/input" results="data" name="card_code" label="提现银行卡号" value="card_code" attr=''/}
+{include file="tpl/input" results="data" name="card_holder" label="持卡人姓名" value="card_holder" attr=''/}
+{include file="tpl/input" results="data" name="bank_name" label="银行名称" value="bank_name" attr=''/}
+{include file="tpl/input" results="data" name="info" label="备注" value="info" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

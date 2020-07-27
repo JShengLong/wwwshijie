@@ -1,0 +1,27 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+	<div class="row">
+		<form class="form-horizontal" role="form" id="form" action="{:url('/admin/setting/edit')}">
+			<div class="form-group">
+				<input type="hidden" name="id" value="{$data.id}">
+				{include file="tpl/input" results="data" name="name" label="标题" value="name" attr='data-rule="required;"readonly ="readonly"'/}
+
+				{if condition="$data.code neq 'shouyi' && $data.code neq 'user_agreement' && $data.code neq 'app_url' && $data.code neq 'quanguo_rexian' && $data.code neq 'morenimg'&& $data.code neq 'shoukuancode' && $data.code neq 'applogourl' &&$data.code neq 'jifenguize'&&$data.code neq 'minilogo'"}
+					{include file="tpl/input" results="data" name="val" label="配置值" value="val" attr=''/}
+				{/if}
+				{if condition="$data.code eq 'shouyi'|$data.code eq 'user_agreement'|$data.code eq 'quanguo_rexian' |$data.code eq 'jifenguize'"}
+					{include file="tpl/ueditor" results="data" name="val" label="配置值" value="val" attr=''/}
+				{/if}
+				{if condition="$data.code eq 'app_url'|$data.code eq 'morenimg'|$data.code eq 'shoukuancode' | $data.code eq 'applogourl'| $data.code eq 'minilogo'"}
+					{include file="tpl/singleImage" results="data" name="val" label="文件" value="val" attr=''/}
+				{/if}
+
+			</div>
+			<div class="form-group" style="margin-top: 20px;">
+				{include file="tpl/button" label="保存"/}
+			</div>
+		</form>
+	</div>
+</div>

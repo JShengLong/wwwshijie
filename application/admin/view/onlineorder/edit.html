@@ -1,0 +1,32 @@
+{include file="common/fileinput"/}
+{include file="common/ueditor"/}
+{include file="tpl/style"/}
+<div class="col-xs-12">
+    <div class="row">
+        <form class="form-horizontal" role="form" id="form" action="{:url('edit')}">
+            <div class="form-group">
+                <input type="hidden" name="o_id" value="{$data.o_id}">
+{include file="tpl/integer" results="data" name="o_mid" label="用户id" value="o_mid" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="o_sn" label="订单号" value="o_sn" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="o_payType" label="支付方式 1微信 2 支付宝 3余额" value="o_payType" attr=''/}
+{include file="tpl/integer" results="data" name="o_status" label="1待支付2待发货3待收货4已收货" value="o_status" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="o_regionId" label="省市区id" value="o_regionId" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="o_total" label="订单总金额" value="o_total" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="o_num" label="订单商品总数量" value="o_num" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="o_name" label="收货人姓名" value="o_name" attr='data-rule="required;"'/}
+{include file="tpl/input" results="data" name="o_phone" label="收货人电话" value="o_phone" attr='data-rule="required;"'/}
+{include file="tpl/integer" results="data" name="o_expressId" label="物流公司ID" value="o_expressId" attr=''/}
+{include file="tpl/input" results="data" name="o_expresssn" label="快递单号" value="o_expresssn" attr=''/}
+{include file="tpl/input" results="data" name="o_address" label="详细地址" value="o_address" attr=''/}
+{include file="tpl/datetime" results="params" name="o_paytime" label="支付时间" value="o_paytime" attr=''/}
+{include file="tpl/datetime" results="params" name="o_sendtime" label="发货时间" value="o_sendtime" attr=''/}
+{include file="tpl/datetime" results="params" name="o_endtime" label="完成时间" value="o_endtime" attr=''/}
+{include file="tpl/input" results="data" name="o_remark" label="订单备注" value="o_remark" attr=''/}
+
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+                {include file="tpl/button" label="保存"/}
+            </div>
+        </form>
+    </div>
+</div>

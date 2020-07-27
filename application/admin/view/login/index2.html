@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!--引入使用的css和js-->
+    <!-- 基础的样式 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$sysName}</title>
+    <!-- jquery -->
+    {load href="/static/admin/js/jquery.min.js" /}
+    <!-- bootstrap -->
+    {load href="/static/admin/css/bootstrap.min.css" /}
+    {load href="/static/admin/js/bootstrap.min.js" /}
+    <!-- base -->
+    {load href="/static/common/js/layer-v3.1.1/layer/layer.js" /}
+    {include file="common/left" /}
+    {load href="/static/common/js/particles/css/normalize.css" /}
+    {load href="/static/common/js/particles/css/default.css" /}
+    {load href="/static/common/js/particles/css/style.css" /}
+</head>
+<script>
+    if(window.top!==window.self){window.top.location=window.location};
+</script>
+<body>
+<div id="particles-js" style="position: relative"></div>
+<div class="middle-box text-center loginscreen animated fadeInDown"
+     style="position:absolute;float: left;top: 0;left: 0;right: 0;bottom: 0;margin: auto;">
+    <div>
+        <div>
+            <h1 class="logo-name">Hi</h1>
+        </div>
+        <h2 style="color: #fff;">欢迎使用【{$sysName}】</h2>
+        <form class="m-t" role="form" action="/admin/login/login" method="post" id="login-form">
+            <div class="form-group">
+                <input class="form-control" placeholder="用户名" name="account" data-rule="required;">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码" name="password" data-rule="required;">
+            </div>
+            <div class="form-group">
+                <input type="code" name="captcha" class="form-control" placeholder="验证码" data-rule="required;"
+                       autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <div><img style="width:100%;" src="" alt="captcha" id="captcha"/></div>
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+        </form>
+    </div>
+</div>
+{load href="/static/common/js/particles/js/particles.min.js" /}
+{load href="/static/common/js/particles/js/app.js" /}
+<script>
+    $(function () {
+        var captchaSrc = "{:captcha_src()}";
+        var refreshCaptcha = function () {
+            $('#captcha').attr('src', captchaSrc + '?_=' + Math.random());
+        };
+        $('#login-form').on('submit', function () {
+            $.post("{:url('login')}", $(this).serialize(), function (res) {
+                if (res.code == 1) {
+                    location.replace("{:url('index/index')}");
+                } else {
+                    layer.alert(res.msg);
+                    refreshCaptcha();
+                }
+            });
+            return false;
+        });
+        $('#captcha').on('click', function () {
+            refreshCaptcha();
+        });
+        refreshCaptcha();
+    });
+    particlesJS('particles-js', {
+        particles: {
+            color: '#fff',
+            shape: 'circle', // "circle", "edge" or "triangle"
+            opacity: 1,
+            size: 4,
+            size_random: true,
+            nb: 150,
+            line_linked: {
+                enable_auto: true,
+                distance: 100,
+                color: '#fff',
+                opacity: 1,
+                width: 1,
+                condensed_mode: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 600
+                }
+            },
+            anim: {
+                enable: true,
+                speed: 1
+            }
+        },
+        interactivity: {
+            enable: true,
+            mouse: {
+                distance: 250
+            },
+            detect_on: 'canvas', // "canvas" or "window"
+            mode: 'grab',
+            line_linked: {
+                opacity: .5
+            },
+            events: {
+                onclick: {
+                    enable: true,
+                    mode: 'push', // "push" or "remove" (particles)
+                    nb: 4
+                }
+            }
+        },
+        /* Retina Display Support */
+        retina_detect: true
+    });
+</script>
+</body>
+</html>

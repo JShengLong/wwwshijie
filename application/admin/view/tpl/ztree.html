@@ -1,0 +1,79 @@
+{load href="/static/common/plugins/zTree_v3/css/demo.css" /}
+{load href="/static/common/plugins/zTree_v3/css/metroStyle/metroStyle.css" /}
+{load href="/static/common/plugins/zTree_v3/js/jquery.ztree.core.js" /}
+{load href="/static/common/plugins/zTree_v3/js/jquery.ztree.excheck.js" /}
+{load href="/static/common/plugins/zTree_v3/js/jquery.ztree.exedit.js" /}
+<script type="text/javascript">
+    <!--
+    var setting = {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: true
+        },
+        callback: {
+            onCheck: selectChecked
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var str='{$[results][\'[name]\']??\'\'}';
+    var zNodes =JSON.parse( str );
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+
+    var newCount = 1;
+    function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_"+treeNode.tId);
+        if (btn) btn.bind("click", function(){
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+            return false;
+        });
+    };
+    //-->
+
+    function selectChecked(event, treeId, treeNode) {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodesChecked = treeObj.getCheckedNodes(true);
+
+        $("input[name=rules]").val(JSON.stringify(nodesChecked))
+    }
+</script>
+<script>
+    $("document").ready(function () {
+        let isEdit = "{$isEdit??''}"
+        if (1 == isEdit) {
+            selectChecked()
+        }
+    });
+</script>
+<div class="form-group col-xs-12">
+    <div class="row">
+        {include file="tpl/label" label="[label]"}
+        <div class="col-xs-9">
+            <div class="content_wrap">
+                <div class="zTreeDemoBackground left">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+                <div class="right">
+                    <ul class="info">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="rules" value=''>
+    </div>
+</div>
